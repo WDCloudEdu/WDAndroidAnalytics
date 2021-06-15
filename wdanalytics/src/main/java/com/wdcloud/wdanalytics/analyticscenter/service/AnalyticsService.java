@@ -45,6 +45,8 @@ public class AnalyticsService extends Service {
         @Override
         public void handleMessage(@NonNull Message msg) {
             if (msg.what == SELECT_MSG) {
+                wdAanlyticsFactory = AnalyticsBeanFactory.getWdAanlyticsFactory();
+                crashWdAanlyticsFactory = AnalyticsBeanFactory.getCrashWdAanlyticsFactory();
                 event_session = GreenDaoManager.getInstance().getEventSession();
                 crash_session = GreenDaoManager.getInstance().getCrashSession();
                 List<EventBean> eventBeans = event_session.loadAll(EventBean.class);
@@ -129,8 +131,6 @@ public class AnalyticsService extends Service {
         @Override
         public void run() {
             super.run();
-            wdAanlyticsFactory = AnalyticsBeanFactory.getWdAanlyticsFactory();
-            crashWdAanlyticsFactory = AnalyticsBeanFactory.getCrashWdAanlyticsFactory();
             AnalyticsSharedPreference instance = AnalyticsSharedPreference.getInstance();
             int Millis = (int) instance.getData("Millis", 5);
             while (true) {
